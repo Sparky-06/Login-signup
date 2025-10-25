@@ -26,6 +26,13 @@ def decrypt(password):
 
 
 # --- Routes ---
+
+# Add a new route for /welcome
+@app.route("/welcome")
+def welcome():
+    return "<h1>Hello guys</h1>"
+
+
 @app.route("/api/signup", methods=["POST"])
 def signup():
     input_details = request.get_json()
@@ -82,11 +89,6 @@ def login():
 
     return jsonify({"Error": "Username not found"}), 404
 
-
-# Add a new route for /welcome
-@app.route("/welcome")
-def welcome():
-    return "<h1>Hello guys</h1>"
 
 
 @app.route("/api/logout", methods=["PUT"])
