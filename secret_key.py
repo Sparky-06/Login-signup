@@ -1,15 +1,8 @@
-from cryptography.fernet import Fernet
 import os
-
-DATA_FILE = 'secret.key'
+from cryptography.fernet import Fernet
 
 def create_load_key():
-    if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, 'rb') as fp:
-            return fp.read()
-    else:
-        key = Fernet.generate_key()
-        with open(DATA_FILE, 'wb') as fp:
-            fp.write(key)
-        return key
-
+    key = os.environ.get("SECRET_KEY")
+    if key is None:
+        raise ValueError("SECRET_KEY environment variable not set")
+    return key.encode()
