@@ -74,13 +74,19 @@ def login():
 
                 token = secrets.token_hex(32)
                 user["token"] = token
-                return jsonify({"Message": "Logged in successfully!", "token": encrypt(token)}), 200
+
+                # Redirect to /welcome page after successful login
+                return redirect(url_for("welcome"))
 
             return jsonify({"Error": "Incorrect password"}), 404
 
     return jsonify({"Error": "Username not found"}), 404
 
 
+# Add a new route for /welcome
+@app.route("/welcome")
+def welcome():
+    return "<h1>Hello guys</h1>"
 @app.route("/api/logout", methods=["PUT"])
 def logout():
     input_data = request.get_json()
