@@ -1,7 +1,7 @@
-{
-  "functions": {
-    "api/*.py": {
-      "runtime": "@vercel/python@3.13"
+    {
+      "functions": {
+        "api/my-python-function.py": {
+          "runtime": "@vercel/python@4.3.0"
+        }
+      }
     }
-  }
-}
