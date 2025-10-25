@@ -87,6 +87,8 @@ def login():
 @app.route("/welcome")
 def welcome():
     return "<h1>Hello guys</h1>"
+
+
 @app.route("/api/logout", methods=["PUT"])
 def logout():
     input_data = request.get_json()
