@@ -104,8 +104,8 @@ def login():
 #No token encryption here!!!
 
                 # Redirect to /welcome page after successful login
-                #return jsonify({"message": "Logged in successfully", "token": token}), redirect("https://www.youtube.com/")
-                return redirect("https://www.youtube.com/")
+                return jsonify({"message": "Logged in successfully", "token": token}), 200
+                #return redirect("https://www.youtube.com/")
 
             return jsonify({"Error": "Incorrect password"}), 404
 
@@ -137,4 +137,5 @@ def logout():
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, ssl_context='adhoc', debug=True)
+
 
