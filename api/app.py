@@ -77,7 +77,7 @@ def signup():
 
 
 
-@app.route("/", methods = ['GET'])
+@app.route("/welcome", methods = ['GET'])
 def welcome():
     return "<h1>Hello guys</h1>"
 
@@ -137,5 +137,6 @@ def logout():
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, ssl_context='adhoc', debug=True)
+
 
 
