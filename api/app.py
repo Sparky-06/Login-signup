@@ -135,10 +135,51 @@ def logout():
     return jsonify({"Error": "Incorrect username"}), 404
 
 
+@app.route('/api/seller_dash', methods=['POST'])
+def seller_dash():
+    # Retrieve user data
+    data = user_data()
+
+    # Parse JSON input and trim string fields
+    input_details = request.get_json()
+    input_details = {k: v.strip() if isinstance(v, str) else v for k, v in input_details.items()}
+
+    # Validate input fields
+    if input_details.get("price", 0) < 0 or input_details.get("original_price", 0) < 0:
+        return jsonify({"error": "Please enter positive numbers for prices"}), 400
+
+    # if not (0 <= input_details.get("rating", 0) <= 5):
+    #     return jsonify({"error": "Rating should be between 0 and 5"}), 400
+
+    # Check if username exists
+    for user in data:
+        if input_details["username"] == user["username"]:
+            # Prepare content to insert
+            content = {
+                "username": input_details["username"],
+                "name": input_details["product_name"],
+                "price": input_details["price"],
+                "Originalprice": input_details["Originalprice"],
+                "brand": input_details["brand"],
+                "category": input_details["category"],
+                "image": input_details["image"]
+            }
+
+            # Insert into Supabase
+            response = supabase.table("MarketPlace").insert(content).execute()
+
+            return jsonify({
+                "message": "Product successfully uploaded",
+                "product": content
+            }), 201
+
+    return jsonify({"error": "Username does not exist"}), 404
+
 
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, ssl_context='adhoc', debug=True)
+
 
 
 
