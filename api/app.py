@@ -97,7 +97,8 @@ def login():
                 response = (supabase.table("user_data").select("token").eq("username", input_data["username"]).execute())
                 if response.data and response.data[0].get("token"):
                     #return jsonify({"error": "User already logged in"}), 409
-                    return jsonify({"message": "Logged in successfully", "token": token}), 200
+                    existing_token = response.data[0]["token"]
+                    return jsonify({"message": "Logged in successfully", "token": existing_token}), 200
 
                 token = secrets.token_hex(32)
                 response = (supabase.table("user_data").update({"token": token}).eq("username", input_data['username']).execute())
@@ -138,6 +139,7 @@ def logout():
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, ssl_context='adhoc', debug=True)
+
 
 
 
